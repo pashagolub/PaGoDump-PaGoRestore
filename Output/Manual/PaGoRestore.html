@@ -1,0 +1,258 @@
+<!DOCTYPE html><html><head><title>PaGoRestore Documentation</title>
+<style>
+A:link             {color:#0000FF;text-decoration:none;}
+A:active           {color:#000080;text-decoration:none;}
+A:visited          {color:#800080;text-decoration:none;}
+A:hover            {color:#FF0000;text-decoration:underline;}
+
+img                {margin:20px 0px 20px 0px;}
+td img             {margin:0px 0px 0px 0px;border:none;}
+p img              {margin:0px 0px -5px 0px;border:none;}
+li img             {margin:0px 0px -5px 0px;border:none;}
+body               {margin:10px 10px 50px 10px;padding:0px;background-color:#ffffff;color: #000000;font-family:Verdana,Arial,sans-serif;font-size:12px;}
+td                 {padding:4px;background-color:#ffffff;color:#000000;font-family:Verdana,Arial,sans-serif;font-size:12px;vertical-align:top;}
+th                 {padding:4px;background-color:#ffffff;color:#000000;font-family:Verdana,Arial,sans-serif;font-size:12px;text-align:center;white-space:nowrap;}
+p                  {margin:.5em 0em .5em 0em;font-size:12px}
+ol,ul              {margin:.5em 0em 0em 2em;}
+ul li              {margin-bottom:.5em;font-size:12px;list-style-image:none;list-style-position:outside;list-style-type:square;}
+ol li              {margin-bottom:.5em;font-size:12px}
+
+
+h1                 {font-size:16px;}
+h2                 {font-size:14px;}
+h2.TextHeader      {}
+h3                 {font-size:12px;font-weight:bold;margin-top:0px;margin-bottom:0px;margin-left:15px;color:#000000;}
+h4                 {margin-left:30px;font-size:12px;font-weight:normal;margin-top:0px;margin-bottom:10px;}
+h1,h2,h3 {color: #01559e;}
+        
+div.topic          {background-color:#ffffff;padding:4px 4px 4px 10px;}
+
+table.yellowbox    {border:buttonshadow 1px solid;border-top:buttonshadow 1px solid;margin-top:15px;margin-bottom:15px;border-collapse:collapse;background-color:infobackground;width:100%;}
+table.yellowbox td {padding:4px;vertical-align:top;background-color:infobackground;color:navy;}
+td.yellowbox       {padding:4px;vertical-align:top;background-color:infobackground;color:navy;width:100%;}
+img.yellowbox      {margin:0px 0px 0px 0px;}
+
+dl.Features        {margin: 1em 0 1em;}
+.Features dt       {font-weight: bold;}        
+.Features dd       {margin: 0 0 1em 1em;}
+
+.hr                {margin-left: 15px;margin-right: 15px;height:20px;background: url(dots.gif) repeat-x center;}
+.hrfull            {margin-left: 0;margin-right: 0;}
+
+</style>
+</head>
+<body>
+<!-- Name                                                                                             -->
+<H1>Name</H1>
+<p>PaGoRestore &mdash; restore a PostgreSQL database from an archive created by pg_dump or <a target="_blank" href="http://microolap.com/products/database/pagodump/">Microolap PaGoDump</a> in one of the non-plain-text formats..</p>
+
+<!-- Description                                                                                      -->
+<H1>Description</H1>
+<p>PaGoRestore is a GUI Windows utility for restoring a PostgreSQL database from an archive built with <a target="_blank" href="http://www.postgresql.org/docs/8.4/static/app-pgdump.html">pg_dump</a> or <a href="/products/database/pagodump/">PaGoDump</a>. Utility itself built with <a target="_blank" href="http://microolap.com/products/connectivity/postgresdac/">Microolap PostgresDAC</a>. It will issue the commands necessary to reconstruct the database to the state it was in at the time it was saved. The archive files also allow PaGoRestore to be selective about what is restored, or even to reorder the items prior to being restored. The archive files are designed to be portable across architectures. 
+</p>
+
+<p>PaGoRestore can operate in two modes. If a database is specified as target, the archive is restored directly into the database. Otherwise, a script containing the SQL commands necessary to rebuild the database is created and written to a file. The script output is equivalent to the plain text output format of PaGoDump and pg_dump. Some of the options controlling the output are therefore analogous to PaGoDump and pg_dump options.</p>
+
+
+
+<p>Obviously, PaGoRestore cannot restore information that is not present in the archive file. For instance, if the archive was made using the “dump data as INSERT commands” option, PaGoRestore will not be able to load the data using COPY statements.</p>
+
+<p>While running PaGoRestore, one should examine the output for any warnings (Log tab), especially in light of the limitations listed below.</p>
+<!--                                                                                                  --> 
+<!-- COPY begin                                                                                       --> 
+<!--                                                                                                  --> 
+
+
+<div class="hr hrfull"></div>
+<!-- Profile                                                                                          -->
+<h2 class="TextHeader">Profile</h2>
+<img src="PaGoRestore-Profile.png" alt="">
+<dl class="Features">
+	<dt>Profile File Name</dt>
+	<dd>Enter here existing profile file name to open previously saved options or new name to have Save functionality enabled.</dd>
+	<dt>Recently Used Profiles</dt>
+	<dd>Double-click to open one of recently used profiles.</dd>
+</dl>
+<div class="hr hrfull"></div>
+
+<!-- Input                                                                                       -->
+<h2 class="TextHeader">Input</h2>
+<img src="PaGoRestore-Input.png" alt="">
+
+<dl class="Features">
+	<dt>Input File Name</dt>
+	<dd>Specifies the location of the archive file to be restored</dd>
+
+	<dt>Archive Format</dt>
+	<dd>Specify format of the archive. Can be one of the following:<table>
+ <tr>
+  <td align=right><b>TAR</b></td><td>-</td>
+  <td>The archive is a tar archive. Using this archive format allows reordering and/or exclusion of schema elements at the time the database is restored. It is also possible to limit which data is reloaded at restore time.</td>
+ </tr>
+ <tr>
+  <td align=right><b>COMPRESS</b></td><td>-</td>
+  <td>The archive is the custom format of pg_dump and PaGoDump. This is the most flexible format in that it allows reordering of data load as well as schema elements. This format is also compressed by default.</td>
+ </tr>
+</table>
+ </dd>
+</dl>
+
+<!-- Target                                                                                       -->
+<h2 class="TextHeader">Target</h2>
+<img src="PaGoRestore-Target1.png" alt="">
+
+
+<dl class="Features">
+	<dt>Host</dt>
+	<dd>Specifies the host name of the machine on which the server is running.</dd>
+ 
+	<dt>Username</dt>
+	<dd>User name to connect as.</dd>
+ 
+	<dt>Password</dt>
+	<dd>Specifies a password for the connection.</dd>
+ 
+	<dt>Port</dt>
+	<dd>Specifies the TCP port on which the server is listening for connections. Defaults to the <I>PGPORT</I> environment variable, if set, or a compiled-in default.</dd>
+ 
+	<dt>Connection Timeout</dt>
+	<dd>Specifies amount of time to attempt a connection in seconds.</dd>
+ 
+	<dt>Database Name</dt>
+	<dd>Specifies the name of the database to be dumped.</dd>
+</dl>
+
+<img src="PaGoRestore-Target2.png" alt="">
+<dl class="Features">
+	<dt>Script File Name</dt>
+	<dd>Specify output file for generated script.</dd>
+</dl
+
+
+<!-- For future use
+
+<dt>Library Name</dt
+<dd>Specifies the name of the dump library to be used.</dd>
+</dl>
+
+<div class="hr hrfull"></div>
+
+-->
+<!-- Options                                                                                          -->
+<h2 class="TextHeader">Options</h2>
+<img src="PaGoRestore-Options.png" alt="">
+<dl class="Features">
+
+
+	<dt>Role Name</dt>
+	<dd>Specifies a role name to be used to perform the restore. This option causes PaGoRestore to issue a <em>SET ROLE rolename</em> command after connecting to the database. It is useful when the authenticated user lacks privileges needed by PaGoRestore, but can switch to a role with the required rights. Some installations have a policy against logging in directly as a superuser, and use of this option allows restores to be performed without violating the policy.</dd>
+
+	<dt>Create Database</dt>
+	<dd>Create the database before restoring into it. When this option is used, the database named in Connection Options is used only to issue the initial <em>CREATE DATABASE</em> command. All data is restored into the database name that appears in the archive.</dd>
+
+	<dt>Clean Objects</dt>
+	<dd>Clean (drop) database objects before recreating them.</dd>
+
+	<dt>Use IF EXISTS clause</dt>
+	<dd>Use conditional commands (i.e. add an <I>IF EXISTS</I> clause) when cleaning database objects. This option is not valid unless <I>Clean Objects</I> is also specified.</dd>
+
+	<dt>Only Data</dt>
+	<dd>Restore only the data, not the schema (data definitions).</dd>
+
+	<dt>Only Schema</dt>
+	<dd>Restore only the schema (data definitions), not the data (table contents). Sequence current values will not be restored, either.</dd>
+
+	<dt>Exit On Error</dt>
+	<dd>Exit if an error is encountered while sending SQL commands to the database. The default is to continue and to display a count of errors at the end of the restoration.</dd>
+
+	<dt>Single Transaction</dt>
+	<dd>Execute the restore as a single transaction (that is, wrap the emitted commands in <em>BEGIN/COMMIT</em>). This ensures that either all the commands complete successfully, or no changes are applied. This option implies "Exit On Error".</dd>
+
+	<dt>No Priveleges</dt>
+	<dd>Prevent dumping of access privileges (grant/revoke commands).</dd>
+
+	<dt>Verbose Messages</dt>
+	<dd>Specifies verbose mode. This will cause PaGoRestore to output detailed information including start/stop times, and progress messages to Log tab.</dd>
+
+	<dt>Jobs</dt>
+	<dd>Run the most time-consuming parts of restore &mdash; those which load data, create indexes, or create constraints — using multiple concurrent jobs. This option can dramatically reduce the time to restore a large database to a server running on a multi-processor machine. 
+
+Each job is one process or one thread, depending on the operating system, and uses a separate connection to the server. 
+
+The optimal value for this option depends on the hardware setup of the server, of the client, and of the network. Factors include the number of CPU cores and the disk setup. A good place to start is the number of CPU cores on the server, but values larger than that can also lead to faster restore times in many cases. Of course, values that are too high will lead to decreasing performance because of thrashing. 
+
+Only the custom archive (COMPRESS) format is supported with this option. This option is ignored when emitting a script rather than connecting directly to a database server. Also, multiple jobs cannot be used together with the option "Single Transaction". 
+</dd>
+
+	<dt>No Tablespaces</dt>
+	<dd>Do not output commands to select tablespaces. With this option, all objects will be created in whichever tablespace is the default during restore.</dd>
+
+	<dt>No Privileges</dt>
+	<dd>Prevent restoration of access privileges (<em>GRANT/REVOKE</em> commands).</dd>
+
+	<dt>No Owner</dt>
+	<dd>Do not output commands to set ownership of objects to match the original database. By default, PaGoRestore issues <em>ALTER OWNER</em> or <em>SET SESSION AUTHORIZATION</em> statements to set ownership of created schema elements. These statements will fail unless the initial connection to the database is made by a superuser (or the same user that owns all of the objects in the script). With this option, any user name can be used for the initial connection, and this user will own all the created objects.</dd>
+
+	<dt>No Data For Failed Tables</dt>
+	<dd>By default, table data is restored even if the creation command for the table failed (e.g., because it already exists). With this option, data for such a table is skipped. This behavior is useful if the target database already contains the desired table contents. For example, auxiliary tables for PostgreSQL extensions such as PostGIS might already be loaded in the target database; specifying this option prevents duplicate or obsolete data from being loaded into them. 
+This option is effective only when restoring directly into a database, not when producing SQL script output.
+</dd>
+
+	<dt>Disable Triggers</dt>
+	<dd>This option is only relevant when performing a data-only restore. It instructs PaGoRestore to execute commands to temporarily disable triggers on the target tables while the data is reloaded. Use this if you have referential integrity checks or other triggers on the tables that you do not want to invoke during data reload. 
+<br>
+Presently, the commands emitted for this option must be done as superuser. So, you should also specify a superuser name, or preferably run PaGoRestore as a PostgreSQL superuser.
+</dd>
+
+	<dt>Superuser Name</dt>
+	<dd>Specify the superuser user name to use when disabling triggers. This is only relevant if "Disable Triggers" option is used.</dd>
+
+	<dt>Use SET SESSION AUTHORIZATION</dt>
+	<dd>Output SQL-standard <I>SET SESSION AUTHORIZATION</I> commands instead of <I>ALTER OWNER</I> commands to determine object ownership. This makes the dump more standards compatible, but depending on the history of the objects in the dump, might not restore properly.</dd>
+
+	<dt>Enable Row Security</dt>
+	<dd>This option is relevant only when restoring the contents of a table which has row security. By default, application will set row_security to off, to ensure that all data is restored in to the table. If the user does not have sufficient privileges to bypass row security, then an error is thrown. This parameter instructs <I>PaGoRestore</I> to set row_security to on instead, allowing the user to attempt to restore the contents of the table with row security enabled. This might still fail if the user does not have the right to insert the rows from the dump into the table.
+
+    Note that this option currently also requires the dump be in <I>INSERT</I> format, as <I>COPY TO</I> does not support row security.
+</dd>	
+</dl>
+<div class="hr hrfull"></div>
+
+<!--Selection                                                                                         -->
+<h2 class="TextHeader">Selection</h2>
+<img src="PaGoRestore-Selection.png" alt="">
+
+<p>On this tab you can specify what objects to be included or excluded from the restore.</p>
+
+<img src="PaGoRestore-Log.png" alt="">
+<div class="hr hrfull"></div>
+
+<!-- Diagnostics                                                                                      -->
+<h2 class="TextHeader">Diagnostics</h2>
+<P>When a direct database connection is specified, PaGoRestore internally executes SQL statements. If you have problems running PaGoRestore, make sure you are able to select information from the database using, for example, psql.</P>
+<div class="hr hrfull"></div>
+
+
+<!-- Notes                                                                                            -->
+<h2 class="TextHeader">Notes</h2>
+
+<P>If your database cluster has any local additions to the <I>template1</I> database, be careful to restore the output of PaGoRestore into a truly empty database; otherwise you are likely to get errors due to duplicate definitions of the added objects. To make an empty database without any local additions, copy from <I>template0</I> not <I>template1</I>, for example:</P>
+
+<PRE>CREATE DATABASE foo WITH TEMPLATE template0;</PRE>
+
+<P>The limitations of PaGoRestore are detailed below. </P>
+
+<ul>
+<li>When restoring data to a pre-existing table and the option "Disable Triggers" is used, PaGoRestore emits commands to disable triggers on user tables before inserting the data then emits commands to re-enable them after the data has been inserted. If the restore is stopped in the middle, the system catalogs might be left in the wrong state.</li>
+
+<li>PaGoRestore cannot restore large objects selectively, for instance only those for a specific table. If an archive contains large objects, then all large objects will be restored, or none of them if they are excluded via -L, -t, or other options.</li>
+</ul>
+
+<P>Once restored, it is wise to run <em>ANALYZE</em> on each restored table so the optimizer has useful statistics.</P>
+<!--                                                                                                  --> 
+<!-- /COPY end                                                                                        --> 
+<!--                                                                                                  --> 
+<p style="font-size:10pt"><i>Disclaimer:</i> for obvious reasons this document is based on the original PostgreSQL <i>pg_dump</i> documentation. Microolap Technologies don't pretend to be the author of the text above.</p>
+
+</body>
+</html>
