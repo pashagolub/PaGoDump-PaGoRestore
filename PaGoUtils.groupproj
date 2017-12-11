@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{7298865D-6E1C-4CE0-8067-7FC91BE04609}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="PaGoDump.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="PaGoRestore.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="PaGoDump">
+        <MSBuild Projects="PaGoDump.dproj"/>
+    </Target>
+    <Target Name="PaGoDump:Clean">
+        <MSBuild Projects="PaGoDump.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PaGoDump:Make">
+        <MSBuild Projects="PaGoDump.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PaGoRestore">
+        <MSBuild Projects="PaGoRestore.dproj"/>
+    </Target>
+    <Target Name="PaGoRestore:Clean">
+        <MSBuild Projects="PaGoRestore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PaGoRestore:Make">
+        <MSBuild Projects="PaGoRestore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="PaGoDump;PaGoRestore"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="PaGoDump:Clean;PaGoRestore:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="PaGoDump:Make;PaGoRestore:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
