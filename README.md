@@ -1,4 +1,4 @@
-You may download compiled  [PaGoDump & PaGoRerstore v10.1 here](Output/PaGoDumpRestore.zip)!
+You may download compiled  [PaGoDump & PaGoRerstore v10.1 here](https://github.com/pashagolub/PaGoDump-PaGoRestore/releases)!
 
 # PaGoDump
 
